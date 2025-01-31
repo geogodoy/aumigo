@@ -1,27 +1,4 @@
 # aumigo/
-# │── src/
-# │   ├── main/
-# │   │   ├── java/com/geogodoy/aumigo/
-# │   │   │   ├── AumigoApplication.java  # Classe principal do Spring Boot
-# │   │   │   ├── config/                 # Configurações do projeto (CORS, Security, DB)
-# │   │   │   ├── domain/                 # Entidades e lógica de domínio
-# │   │   │   │   ├── model/               # Modelos de dados (Entidades JPA)
-# │   │   │   │   ├── repository/          # Repositórios (interfaces JPA)
-# │   │   │   ├── service/                 # Serviços (regras de negócio)
-# │   │   │   │   ├── impl/                 # Implementações de serviços
-# │   │   │   ├── controller/              # Controladores REST
-# │   │   │   ├── dto/                     # Data Transfer Objects (DTOs)
-# │   │   │   ├── exception/               # Tratamento de exceções personalizadas
-# │   │   │   ├── security/                # Configuração de autenticação/autorização
-# │   │   │   ├── util/                    # Classes utilitárias
-# │   │   ├── resources/
-# │   │   │   ├── application.properties   # Configurações do Spring Boot
-# │   │   │   ├── schema.sql                # Script SQL inicial (se necessário)
-# │   ├── test/                            # Testes automatizados
-# │       ├── java/com/geogodoy/aumigo/
-# │           ├── controller/              # Testes dos controllers
-# │           ├── service/                 # Testes dos serviços
-# │           ├── repository/              # Testes dos repositórios
 
 
 Explicação das Pastas
@@ -41,3 +18,16 @@ Explicação das Pastas
 7- security/ → Configuração de autenticação/autorização, como Spring Security e JWT.
 
 8- util/ → Métodos auxiliares, como conversores de data e formatação.
+
+
+# Padrões de projeto aplicados
+
+1. Service Layer Pattern (Separação de Responsabilidades)
+   Os controladores REST não devem conter regras de negócio. Essa lógica deve ser isolada nos serviços, tornando o código mais limpo e testável.
+2. DTO Pattern (Data Transfer Object)
+   Evita expor diretamente as entidades JPA nas respostas dos endpoints. Os DTOs são objetos simples que contêm apenas os dados necessários para a comunicação.
+3. Repository Pattern (Acesso a Dados)
+   Repositórios são interfaces que estendem JpaRepository, permitindo acesso ao banco de dados de forma mais simples e sem a necessidade de escrever queries SQL.
+   obs: O Spring Data JPA que está sendo usado nesse projeto já segue o Repository Pattern, pois ele separa a camada de persistência da lógica de negócios ao definir interfaces que estendem JpaRepository ou CrudRepository.
+4. Strategy Pattern (Injeção de Dependências)
+   As implementações de serviços são injetadas nos controladores por meio de interfaces, permitindo a troca de implementação sem alterar o código que as utiliza.

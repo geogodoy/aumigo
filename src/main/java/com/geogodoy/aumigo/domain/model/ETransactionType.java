@@ -1,4 +1,5 @@
 package com.geogodoy.aumigo.domain.model;
 
-public class PetEntity {
+public enum ETransactionType {
+    IN, OUT
 }

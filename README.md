@@ -31,3 +31,9 @@ Explicação das Pastas
    obs: O Spring Data JPA que está sendo usado nesse projeto já segue o Repository Pattern, pois ele separa a camada de persistência da lógica de negócios ao definir interfaces que estendem JpaRepository ou CrudRepository.
 4. Strategy Pattern (Injeção de Dependências)
    As implementações de serviços são injetadas nos controladores por meio de interfaces, permitindo a troca de implementação sem alterar o código que as utiliza.
+
+
+Maven 
+para baixar as dependências do projeto, execute o comando mvn clean install no diretório raiz do projeto: mvn clean install -s settings.xmlmvn -version
+trocar java_home para 17
+

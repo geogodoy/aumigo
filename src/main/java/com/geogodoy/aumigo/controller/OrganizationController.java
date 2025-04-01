@@ -3,6 +3,7 @@ package com.geogodoy.aumigo.controller;
 
 import com.geogodoy.aumigo.domain.model.Organization;
 import com.geogodoy.aumigo.service.OrganizationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @RequestMapping("/organizations")
 public class OrganizationController {
 
+    @Autowired
     private OrganizationService organizationService;
 
     @PostMapping("/save")

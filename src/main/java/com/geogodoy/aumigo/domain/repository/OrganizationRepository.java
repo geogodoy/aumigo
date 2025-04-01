@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface OrganizationRepository  extends JpaRepository<Organization, Long> {
+
+    @Query("SELECT o.id FROM Organization o WHERE o.active = true")
     List<Long> findAllByActiveTrue();
 }

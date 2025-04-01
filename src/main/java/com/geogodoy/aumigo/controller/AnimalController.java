@@ -2,6 +2,7 @@ package com.geogodoy.aumigo.controller;
 import com.geogodoy.aumigo.domain.model.Animal;
 import com.geogodoy.aumigo.service.AnimalService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @RequestMapping("/animals")
 public class AnimalController {
 
+    @Autowired
     private AnimalService petService;
 
     @GetMapping

@@ -14,6 +14,8 @@ public interface OrganizationService {
 
     List<Long> getAllActive();
 
+    Organization getById(Long id);
+
     int countAnimalsByOrganization(Long id);
 
     void deleteOrganization(Long id);

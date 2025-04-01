@@ -2,11 +2,13 @@ package com.geogodoy.aumigo.service.impl;
 
 import com.geogodoy.aumigo.domain.model.*;
 import com.geogodoy.aumigo.domain.repository.DonationRepository;
+import com.geogodoy.aumigo.domain.repository.OrganizationRepository;
 import com.geogodoy.aumigo.exception.DonationException;
 import com.geogodoy.aumigo.service.DonationService;
 import com.geogodoy.aumigo.service.OrganizationService;
 import com.geogodoy.aumigo.service.TransactionService;
 import com.geogodoy.aumigo.service.WalletService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -16,12 +18,16 @@ import java.util.Map;
 @Service
 public class DonationServiceImpl implements DonationService {
 
+    @Autowired
     private OrganizationService organizationService;
 
+    @Autowired
     private TransactionService transactionService;
 
+    @Autowired
     private WalletService walletService;
 
+    @Autowired
     private DonationRepository donationRepository;
 
     @Override
@@ -32,7 +38,6 @@ public class DonationServiceImpl implements DonationService {
 
     @Override
     public void processDonation(Donation donation) throws DonationException {
-        Donation organizationDonation = new Donation();
 
         List<Long> organizationsActive = organizationService.getAllActive();
 
@@ -51,15 +56,15 @@ public class DonationServiceImpl implements DonationService {
                 Long organizationId = entry.getKey();
                 int animalCount = entry.getValue();
 
-                double percentage = (double) animalCount / totalAnimals;
-                double donationAmount = donation.getValue() * percentage;
+                double percentage = ((double) animalCount / totalAnimals) * 100;
+                double donationAmount = donation.getValue() * (percentage/100);
 
-                organizationDonation.setValue(donationAmount);
-                organizationDonation.setStatus(EDonationStatus.PROCESSED);
-                organizationDonation.setDescription(donation.getDescription());
-                organizationDonation.setOrganizationId(organizationId);
+                donation.setValue(donationAmount);
+                donation.setStatus(EDonationStatus.PROCESSED);
+                donation.setDescription(donation.getDescription());
+                donation.setOrganizationId(organizationId);
 
-                donationRepository.save(organizationDonation);
+                donationRepository.save(donation);
 
                 walletService.addAmountByOrganization(donationAmount, organizationId);
 
@@ -72,8 +77,8 @@ public class DonationServiceImpl implements DonationService {
                 transactionService.saveTransaction(transaction);
 
             } catch (Exception e) {
-                organizationDonation.setStatus(EDonationStatus.FAILED);
-                donationRepository.save(organizationDonation);
+                donation.setStatus(EDonationStatus.FAILED);
+                donationRepository.save(donation);
                 throw new DonationException("Erro ao processar doação para organização", e);
 
             }

@@ -12,8 +12,10 @@ import java.util.List;
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 
+    @Autowired
     private OrganizationRepository organizationRepository;
 
+    @Autowired
     private AnimalRepository animalRepository;
 
     public Organization saveOrganization(Organization organization) {
@@ -31,6 +33,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public List<Long> getAllActive() {
         return organizationRepository.findAllByActiveTrue();
+    }
+
+    @Override
+    public Organization getById(Long id) {
+        return organizationRepository.findById(id).orElse(null);
     }
 
     @Override

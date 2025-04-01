@@ -3,6 +3,7 @@ package com.geogodoy.aumigo.service.impl;
 import com.geogodoy.aumigo.domain.model.Animal;
 import com.geogodoy.aumigo.domain.repository.AnimalRepository;
 import com.geogodoy.aumigo.service.AnimalService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class AnimalServiceImpl implements AnimalService {
 
+    @Autowired
     private AnimalRepository animalRepository;
 
     @Override

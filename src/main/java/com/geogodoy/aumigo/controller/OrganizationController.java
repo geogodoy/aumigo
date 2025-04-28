@@ -2,7 +2,9 @@ package com.geogodoy.aumigo.controller;
 
 
 import com.geogodoy.aumigo.domain.model.Organization;
+import com.geogodoy.aumigo.domain.model.Wallet;
 import com.geogodoy.aumigo.service.OrganizationService;
+import com.geogodoy.aumigo.service.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,14 @@ public class OrganizationController {
 
     @Autowired
     private OrganizationService organizationService;
+
+    @Autowired
+    private WalletService service;
+
+    @GetMapping("wallets/{organizationId}")
+    public Wallet getWalletByOrganization(@PathVariable Long organizationId) {
+        return service.getWalletByOrganizationId(organizationId);
+    }
 
     @PostMapping("/save")
     public Organization addOrganization(@RequestBody Organization organization) {

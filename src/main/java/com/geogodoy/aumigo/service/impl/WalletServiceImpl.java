@@ -27,11 +27,6 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public Wallet saveWallet(Wallet wallet) {
-        return walletRepository.save(wallet);
-    }
-
-    @Override
     public Wallet getWalletByOrganizationId(Long organizationId) {
         return walletRepository.findByOrganizationId(organizationId);
     }
